@@ -27,5 +27,5 @@ services:
 databases:
   - name: smart-inventory-db
     databaseName: smart_inventory
-    user: postgres
+    user: smart_user
     plan: free
