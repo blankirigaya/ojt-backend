@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
     # ── Database ─────────────────────────────────────────────────────────────
+    DATABASE_URL: Optional[str] = None
+    DATABASE_URL_SYNC: Optional[str] = None
+
     POSTGRES_SERVER: str = "localhost"
     POSTGRES_PORT: int = 5432
     POSTGRES_USER: str = "postgres"
@@ -29,15 +32,18 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = "smart_inventory"
 
     @property
-    def DATABASE_URL(self) -> str:
+    def ASYNC_DATABASE_URL(self) -> str:
+        if self.DATABASE_URL:
+            return str(self.DATABASE_URL)
         return (
             f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
             f"@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
         )
 
     @property
-    def DATABASE_URL_SYNC(self) -> str:
-        """Sync URL for Alembic migrations."""
+    def SYNC_DATABASE_URL(self) -> str:
+        if self.DATABASE_URL_SYNC:
+            return str(self.DATABASE_URL_SYNC)
         return (
             f"postgresql+psycopg2://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
             f"@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"

@@ -15,7 +15,7 @@ import app.models  # noqa: F401 — registers all models on Base.metadata
 config = context.config
 
 # Set the sync URL (psycopg2, NOT asyncpg)
-config.set_main_option("sqlalchemy.url", settings.DATABASE_URL_SYNC)
+config.set_main_option("sqlalchemy.url", settings.SYNC_DATABASE_URL)
 
 # Set up logging from alembic.ini
 if config.config_file_name is not None:
