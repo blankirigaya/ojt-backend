@@ -21,6 +21,11 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
+    # ── Admin ─────────────────────────────────────────────────────────────────
+    # Set this in Render's Environment Variables dashboard.
+    # Used to protect the admin user-creation endpoint without needing shell access.
+    ADMIN_SECRET: Optional[str] = None
+
     # ── Database ─────────────────────────────────────────────────────────────
     DATABASE_URL: Optional[str] = None
     DATABASE_URL_SYNC: Optional[str] = None
@@ -62,10 +67,12 @@ class Settings(BaseSettings):
         return url
 
     # ── CORS ─────────────────────────────────────────────────────────────────
+    # Add extra origins via BACKEND_CORS_ORIGINS env var (comma-separated) in Render.
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
         "http://localhost:5173",
         "http://localhost:80",
+        "https://ojt-4rasambx0-nullpointer-cells-projects.vercel.app",
     ]
 
     # ── File Upload ───────────────────────────────────────────────────────────

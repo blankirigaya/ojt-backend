@@ -71,10 +71,6 @@ def create_app() -> FastAPI:
 
     @app.exception_handler(Exception)
     async def unhandled_exception_handler(request: Request, exc: Exception):
-        import traceback
-        with open("C:/tmp/api_error.log", "w") as f:
-            f.write(traceback.format_exc())
-            f.write(str(exc))
         logger.exception("Unhandled exception on %s %s", request.method, request.url)
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
